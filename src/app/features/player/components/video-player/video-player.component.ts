@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
 import { Observable, fromEvent, Subscription } from 'rxjs';
-import { AppConstants } from 'src/app/core/constants/app.constants';
 import { VideoPlayerState } from 'src/app/core/models/button-states';
 import { SourceConfig } from '../../interfaces/player-config';
 
