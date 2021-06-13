@@ -1,0 +1,19 @@
+<div class="video-container" [style.width.px]="width" [style.height.px]="height">
+    <video #videoControl class="video-player" [style.width]="'100%'" [style.height]="'auto'">
+        <source *ngFor="let config of sourceConfig" src="{{config.path}}" type="video/{{config.type}}" />
+        Video not supported for the browser
+    </video>
+    <div class="control-panel noselect overlay-bottom-8" [style.color]="controlColor">
+        <div class="flex-grow-4">
+            <mat-icon  #controlButton  id="play" class="control-button" (click)="onPlay()">{{playButtonIcon}}</mat-icon>
+            <mat-icon  #controlButton  id="volume" class="control-button" (click)="onVolume()">{{videoPlayerState.isMute() ? 'volume_off' : 'volume_up'}}</mat-icon>
+            <mat-slider #audioSlider   id="audioSlider" class="control-button control-mat-slider" min="1" max="5" step="0.1"></mat-slider>
+        </div>
+        <div class="flex-grow-6">
+            <!--<mat-icon #controlButton id="caption" class="control-button">closed_caption</mat-icon>-->
+        </div>
+    </div>
+    <div class="video-body-icons overlay-bottom-50" [style.color]="controlColor">
+        <mat-icon #controlButton>{{replayButtonIcon}}</mat-icon>
+    </div>
+</div>

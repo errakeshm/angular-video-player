@@ -1,0 +1,16 @@
+.center-container {
+    position:absolute;
+    top:100px;
+}
+
+.player-container{
+    overflow: none;
+    .player-box {
+        background: #b0aea0;
+        box-shadow:  -20px 20px 60px #969488,
+                     20px -20px 60px #cac8b8;
+        padding: 10px;
+        width: 600px;
+        height: 340px;
+    }
+}

@@ -3,12 +3,14 @@ lockfileVersion: 5.3
 specifiers:
   '@angular-devkit/build-angular': ~12.0.4
   '@angular/animations': ~12.0.4
+  '@angular/cdk': 12.0.4
   '@angular/cli': ~12.0.4
   '@angular/common': ~12.0.4
   '@angular/compiler': ~12.0.4
   '@angular/compiler-cli': ~12.0.4
   '@angular/core': ~12.0.4
   '@angular/forms': ~12.0.4
+  '@angular/material': 12.0.4
   '@angular/platform-browser': ~12.0.4
   '@angular/platform-browser-dynamic': ~12.0.4
   '@angular/router': ~12.0.4
@@ -20,6 +22,7 @@ specifiers:
   karma-coverage: ~2.0.3
   karma-jasmine: ~4.0.0
   karma-jasmine-html-reporter: ^1.5.0
+  material-design-icons: ^3.0.1
   rxjs: ~6.6.0
   tslib: ^2.1.0
   typescript: ~4.2.3
@@ -27,13 +30,16 @@ specifiers:
 
 dependencies:
   '@angular/animations': 12.0.4_@angular+core@12.0.4
+  '@angular/cdk': 12.0.4_0376199e241045f284d8721ae934aaf0
   '@angular/common': 12.0.4_@angular+core@12.0.4+rxjs@6.6.7
   '@angular/compiler': 12.0.4
   '@angular/core': 12.0.4_rxjs@6.6.7+zone.js@0.11.4
   '@angular/forms': 12.0.4_4c7f1d965fcee6957865aae2bc96c3da
+  '@angular/material': 12.0.4_95ae2a69350a56d905b503247532c3af
   '@angular/platform-browser': 12.0.4_3529264209d32ddac6fadbbe09459342
   '@angular/platform-browser-dynamic': 12.0.4_49388a43cdd1bd42e0fc01f91a403bec
   '@angular/router': 12.0.4_4c7f1d965fcee6957865aae2bc96c3da
+  material-design-icons: 3.0.1
   rxjs: 6.6.7
   tslib: 2.2.0
   zone.js: 0.11.4
@@ -233,6 +239,21 @@ packages:
       tslib: 2.2.0
     dev: false
 
+  /@angular/cdk/12.0.4_0376199e241045f284d8721ae934aaf0:
+    resolution: {integrity: sha512-NX/1kEc6ndyEHjGcMtMJYEjwmoURuwRSqKJLbGcHTUwXuuR+hfDP/vU1XDOeXNC80SV+0B4BpJnREkINILfYKw==}
+    peerDependencies:
+      '@angular/common': ^12.0.0 || ^13.0.0-0
+      '@angular/core': ^12.0.0 || ^13.0.0-0
+      rxjs: ^6.5.3
+    dependencies:
+      '@angular/common': 12.0.4_@angular+core@12.0.4+rxjs@6.6.7
+      '@angular/core': 12.0.4_rxjs@6.6.7+zone.js@0.11.4
+      rxjs: 6.6.7
+      tslib: 2.2.0
+    optionalDependencies:
+      parse5: 5.1.1
+    dev: false
+
   /@angular/cli/12.0.4:
     resolution: {integrity: sha512-kZaJ55udB/AjQ+q8CrQfk6JGWdnJpH3c2VtbvSuR/ihiG6zMSxwpXqt1rImQN0RfffG3bsHD2SpM+T7/LKPemw==}
     engines: {node: ^12.14.1 || >=14.0.0, npm: ^6.11.0 || ^7.5.6, yarn: '>= 1.13.0'}
@@ -334,6 +355,25 @@ packages:
       '@angular/common': 12.0.4_@angular+core@12.0.4+rxjs@6.6.7
       '@angular/core': 12.0.4_rxjs@6.6.7+zone.js@0.11.4
       '@angular/platform-browser': 12.0.4_3529264209d32ddac6fadbbe09459342
+      rxjs: 6.6.7
+      tslib: 2.2.0
+    dev: false
+
+  /@angular/material/12.0.4_95ae2a69350a56d905b503247532c3af:
+    resolution: {integrity: sha512-pvfYEeUCLR7EmA6R/kkXz5jfl+RHwh3AS9X9kWARWIOzA7p0hG9ApoFT5KCofTBNp0nukau1QoGR4WGla6wWvQ==}
+    peerDependencies:
+      '@angular/animations': ^12.0.0 || ^13.0.0-0
+      '@angular/cdk': 12.0.4
+      '@angular/common': ^12.0.0 || ^13.0.0-0
+      '@angular/core': ^12.0.0 || ^13.0.0-0
+      '@angular/forms': ^12.0.0 || ^13.0.0-0
+      rxjs: ^6.5.3
+    dependencies:
+      '@angular/animations': 12.0.4_@angular+core@12.0.4
+      '@angular/cdk': 12.0.4_0376199e241045f284d8721ae934aaf0
+      '@angular/common': 12.0.4_@angular+core@12.0.4+rxjs@6.6.7
+      '@angular/core': 12.0.4_rxjs@6.6.7+zone.js@0.11.4
+      '@angular/forms': 12.0.4_4c7f1d965fcee6957865aae2bc96c3da
       rxjs: 6.6.7
       tslib: 2.2.0
     dev: false
@@ -5029,6 +5069,10 @@ packages:
       object-visit: 1.0.1
     dev: true
 
+  /material-design-icons/3.0.1:
+    resolution: {integrity: sha1-mnHEh0chjrylHlGmbaaCA4zct78=}
+    dev: false
+
   /mdn-data/2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
     dev: true
@@ -5741,6 +5785,11 @@ packages:
     dependencies:
       parse5: 6.0.1
     dev: true
+
+  /parse5/5.1.1:
+    resolution: {integrity: sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==}
+    dev: false
+    optional: true
 
   /parse5/6.0.1:
     resolution: {integrity: sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==}

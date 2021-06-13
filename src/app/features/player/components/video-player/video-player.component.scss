@@ -1,0 +1,65 @@
+
+:host {
+    .noselect {
+        -webkit-touch-callout: none; 
+        -webkit-user-select: none; 
+        -khtml-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+    }
+    .overlay-bottom-8{
+        bottom:8%;
+        z-index:10;
+    }
+    .overlay-bottom-50{
+        bottom:50%;
+        z-index:10;
+    }
+    .flex-grow-4 {
+        flex-grow: 4;
+    }
+    .flex-grow-5 {
+        flex-grow: 5;
+    }
+    .flex-grow-6 {
+        flex-grow: 6;
+    }
+    .align-right{
+        text-align: right;
+    }
+    .video-body-icons{
+        position:relative;
+        display: flex;
+        align-items:stretch;
+        justify-content: center;
+        align-items: center;
+        mat-icon{
+            font-size: 60px;
+        }
+    }
+    .control-panel {
+        position:relative;
+        margin:0;
+        padding:0;
+        /*height: 20px;
+        line-height: 20px;*/
+        display:flex;
+        align-items:stretch;
+        .control-mat-slider{
+            bottom:8px;
+        }
+        .control-button {
+            margin: 2px;
+        }
+        .control-button:active {
+            cursor: pointer;
+        }
+        .control-button:hover {
+            cursor: pointer;
+        }
+    }
+    .display-none {
+        display:none;
+    }
+}
