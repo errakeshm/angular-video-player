@@ -1,4 +1,4 @@
-# MoviePlayer
+# Video Player
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4. This is a custom Angular component encapsulating the HTML5 video api. This project is just to playaround with the default HTML5 video api by overriding its default controls and do quirky little things with it.
 
