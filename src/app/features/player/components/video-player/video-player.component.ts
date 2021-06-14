@@ -164,12 +164,10 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
     this.videoHtmlMediaElement.requestFullscreen();
   }
 
-  minimize(event: any){
-
-  }
   changeDuration(event: any){
     this.videoHtmlMediaElement.currentTime = Math.floor(event.value);
   }
+  
   ngOnDestroy(){
     if(this.keyPressListenerSubscriber$ !== undefined && !this.keyPressListenerSubscriber$.closed){
       this.keyPressListenerSubscriber$.unsubscribe();

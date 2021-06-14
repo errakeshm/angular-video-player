@@ -15,7 +15,7 @@
             <div class="flex-grow-4">
                 <mat-icon  #controlButton  id="play" class="control-button" (click)="onPlay()">{{playButtonIcon}}</mat-icon>
                 <mat-icon  #controlButton  id="volume" class="control-button" (click)="onVolumeClick()">{{videoPlayerState.isMute() ? 'volume_off' : 'volume_up'}}</mat-icon>
-                <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="1" step="1"></mat-slider>
+                <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="1" step="0.05"></mat-slider>
             </div>
             <div class="flex-grow-5">
             </div>
