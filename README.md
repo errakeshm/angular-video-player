@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.4. This is a custom Angular component encapsulating the HTML5 video and do quirky little things with the API.
 
+![](snapshot_custom_player.JPG)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
