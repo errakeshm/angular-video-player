@@ -3,6 +3,13 @@ import { AppConstants } from "../constants/app.constants";
 export class VideoPlayerState {
     video : string;
     audio : boolean;
+    audioVolumeLevel : number;
+    maxVideoDuration : number;
+
+    public static MAX_AUDIO_LEVEL:number = 1;
+    public static DEFAULT_AUDIO_LEVEL:number = 0.5;
+    public static MINIMUM_AUDIO_LEVEL:number = 0;
+    public static AUDIO_SKIP_LEVEL:number = 5;
 
     isLoaded(): boolean {
         return this.video == undefined;
@@ -42,5 +49,9 @@ export class VideoPlayerState {
 
     setMute() : void {
         this.audio = false;
+    }
+
+    setAudioLevel(volume:number) : void {
+        this.audioVolumeLevel = volume;
     }
 }

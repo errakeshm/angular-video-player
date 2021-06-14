@@ -1,5 +1,13 @@
-
+@keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+  }
 :host {
+
     .noselect {
         -webkit-touch-callout: none; 
         -webkit-user-select: none; 
@@ -10,11 +18,18 @@
     }
     .overlay-bottom-8{
         bottom:8%;
-        z-index:10;
     }
-    .overlay-bottom-50{
-        bottom:50%;
-        z-index:10;
+    .overlay-bottom-10{
+        bottom:10%;
+    }
+    .overlay-bottom-18{
+        bottom:18%;
+    }
+    .overlay-bottom-20{
+        bottom:20%;
+    }
+    .overlay-bottom-60{
+        bottom:60%;
     }
     .flex-grow-4 {
         flex-grow: 4;
@@ -25,9 +40,19 @@
     .flex-grow-6 {
         flex-grow: 6;
     }
+    .flex-grow-12 {
+        flex-grow: 12;
+    }
     .align-right{
         text-align: right;
     }
+    video::-webkit-media-controls {
+        display:none !important;
+    }
+    .replay{
+        animation : glow 1s ease-in-out infinite alternate;
+    }
+   
     .video-body-icons{
         position:relative;
         display: flex;
@@ -38,7 +63,15 @@
             font-size: 60px;
         }
     }
+    .control-panel-container {
+        position: relative;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+    }
     .control-panel {
+        z-index:10;
         position:relative;
         margin:0;
         padding:0;
@@ -57,6 +90,15 @@
         }
         .control-button:hover {
             cursor: pointer;
+        }
+    }
+    .play-slider{
+        margin: 0;
+        margin-left: 5px;
+        margin-right: 5px;
+        z-index: 10;
+        mat-slider {
+            width: 100%;
         }
     }
     .display-none {
