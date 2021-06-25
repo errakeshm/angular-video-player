@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatSlider } from '@angular/material/slider';
 import { Observable, fromEvent, Subscription } from 'rxjs';
+import { AppConstants } from 'src/app/core/constants/app.constants';
 import { VideoPlayerState } from 'src/app/core/models/button-states';
-import { SourceConfig } from '../../interfaces/player-config';
+import { IWindow, SourceConfig } from '../../interfaces/player-config';
+import { MicService } from '../../services/mic.service';
 
 @Component({
   selector: 'video-player',
@@ -18,6 +20,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   controlColor:string = "white";
   playButtonIcon:string = "play_arrow";
   replayButtonIcon:string;
+  videoFileUrl:string;
+  videoFileType:any;
 
   videoPlayerState : VideoPlayerState = new VideoPlayerState();
   
@@ -33,11 +37,44 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   */
   keyPressListener:Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, 'keyup');
   keyPressListenerSubscriber$:Subscription;
-
-  constructor() { }
+  action:string|null;
+  constructor(private micService: MicService) { }
   
   ngOnInit(): void {
+    this.micService.getStartObservable().subscribe(()=>{
+      console.log('listening');
+    });
 
+    this.micService.getStopObservable().subscribe(()=>{
+      this.videoPlayerState.micToggle();
+    });
+
+    this.micService.getResultObservable().subscribe((event:any)=>{
+      this.action = this.micService.getAction(event);
+     
+      if(this.action !== null) {
+        switch(this.action){
+          case AppConstants.PLAY:
+            this.onPlay(this.action);
+            break;
+          case AppConstants.PAUSE:
+            this.onPlay(this.action);
+            break;
+          case AppConstants.REPLAY:
+            this.onPlay(this.action);
+            break;
+          case AppConstants.MUTE:
+            this.onVolumeClick(this.action);
+            break;
+          case AppConstants.VOLUME:
+            this.onVolumeClick(this.action);
+            break;
+          case AppConstants.FULL:
+            this.onFullscreen();
+            break;
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -73,32 +110,33 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onPlay(){
-    if(this.videoPlayerState.isLoaded()) {
+  onPlay(action?:string){
+    if(this.videoPlayerState.isLoaded() && (action == undefined || action == AppConstants.PLAY)) {
       this.changeVolume();
       this.videoPlayerState.setPlay();
       this.playVideo();
-    } else if(this.videoPlayerState.isPaused()){
+    } else if(this.videoPlayerState.isPaused() && (action == undefined || action == AppConstants.PLAY)){
       this.playVideo();
       this.videoPlayerState.setPlay();
-    } else if(this.videoPlayerState.isReplaying()){
+    } else if(this.videoPlayerState.isReplaying() && (action == undefined || action == AppConstants.REPLAY)){
       this.playVideo(0);
       this.videoPlayerState.setPlay();
-    } else if(this.videoPlayerState.isPlaying()){
+    } else if(this.videoPlayerState.isPlaying() && (action == undefined || action == AppConstants.PAUSE)){
+      console.log('pausing')
       this.pauseVideo();
       this.videoPlayerState.setPause();
     }
     this.determineIcon();
   }
 
-  onVolumeClick() {
+  onVolumeClick(action?:string) {
     let volumeLevel = VideoPlayerState.DEFAULT_AUDIO_LEVEL;
-    if(!this.videoPlayerState.isMute()){
+    if(!this.videoPlayerState.isMute() && (action == undefined || action == AppConstants.MUTE)){
       this.videoPlayerState.setMute();
       volumeLevel = VideoPlayerState.MINIMUM_AUDIO_LEVEL;
-    } else{
+    } else if(this.videoPlayerState.isMute() && (action == undefined || action == AppConstants.VOLUME)){
       this.videoPlayerState.setUnmute();
-      if(this.videoPlayerState.audioVolumeLevel !== VideoPlayerState.MINIMUM_AUDIO_LEVEL) {
+      if(this.videoPlayerState.audioVolumeLevel !== undefined && this.videoPlayerState.audioVolumeLevel !== VideoPlayerState.MINIMUM_AUDIO_LEVEL) {
         volumeLevel = this.videoPlayerState.audioVolumeLevel;
       }
     }
@@ -160,12 +198,28 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  fullscreen(event: any){
+  onFullscreen(){
     this.videoHtmlMediaElement.requestFullscreen();
   }
 
   changeDuration(event: any){
     this.videoHtmlMediaElement.currentTime = Math.floor(event.value);
+  }
+
+  onFileChange(event:any){
+    const files:FileList = event.target.files;
+    if(files.length > 0){
+      this.videoFileUrl = URL.createObjectURL(files.item(0));
+      this.videoFileType = files.item(0)?.type;
+    }
+  }
+
+  onSpeak(event:any){
+    this.videoPlayerState.micToggle();
+    if(this.videoPlayerState.isMicEnabled())
+      this.micService.start();
+    else
+      this.micService.stop();
   }
   
   ngOnDestroy(){

@@ -4,6 +4,10 @@
         Video not supported for the browser
     </video>
     
+    <!--<video #videoControl class="video-player" [style.width]="'100%'" [style.height]="'auto'">
+        <source src="{{videoFileUrl}}" type="{{videoFileType}}" />
+        Video not supported for the browser
+    </video>-->
    
     <div class="control-panel-container overlay-bottom-18" [style.color]="controlColor">
         <div class="play-slider">
@@ -17,14 +21,32 @@
                 <mat-icon  #controlButton  svgIcon="{{videoPlayerState.isMute() ? 'volume_off' : 'volume_up'}}" id="volume" class="control-button" (click)="onVolumeClick()"></mat-icon>
                 <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="1" step="0.05"></mat-slider>
             </div>
-            <div class="flex-grow-5">
+            <div class="flex-grow-4">
             </div>
-            <div class="flex-grow-1">
-                <mat-icon (click)="fullscreen($event)" svgIcon="fullscreen" id="fullscreen" class="control-button"></mat-icon>
+            <div class="flex-grow-2">
+                <!-- TBD -->
+                <!--<mat-icon svgIcon="upload" id="upload" class="control-button" (click)="file.click()">
+                    <span class="pointer">
+                        <input #file type="file" id="fileUpload" (change)="onFileChange($event)" hidden/>
+                    </span>
+                </mat-icon>-->
+                <mat-icon svgIcon="{{videoPlayerState.isMicEnabled() ? 'mic_on' : 'mic_off'}}" id="mic" (click)="onSpeak($event)" class="control-button"></mat-icon>
+                <!-- TBD -->
+                <!--<mat-icon svgIcon="settings" mat-icon-button [matMenuTriggerFor]="settings" id="fullscreen" class="control-button">
+                </mat-icon>
+                <mat-menu #settings>
+                    <span mat-menu-item class="pointer">
+                    </span>
+                </mat-menu>-->
+               <mat-icon (click)="onFullscreen()" svgIcon="fullscreen" id="fullscreen" class="control-button"></mat-icon>
             </div>
         </div>
     </div>
     <div class="video-body-icons overlay-bottom-60" [style.color]="controlColor">
         <mat-icon #replayButton [ngClass]="'replay'">{{replayButtonIcon}}</mat-icon>
     </div>
+</div>
+<!-- Temporary -->
+<div class="command glow">
+    <q *ngIf="action">{{action}}</q>
 </div>

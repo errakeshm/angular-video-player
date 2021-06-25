@@ -5,6 +5,7 @@ export class VideoPlayerState {
     audio : boolean;
     audioVolumeLevel : number;
     maxVideoDuration : number;
+    mic:boolean;
 
     public static MAX_AUDIO_LEVEL:number = 1;
     public static DEFAULT_AUDIO_LEVEL:number = 0.5;
@@ -53,5 +54,13 @@ export class VideoPlayerState {
 
     setAudioLevel(volume:number) : void {
         this.audioVolumeLevel = volume;
+    }
+
+    isMicEnabled(){
+        return this.mic;
+    }
+
+    micToggle(){
+        this.mic = !this.mic;
     }
 }

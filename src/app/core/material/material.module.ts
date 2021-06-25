@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatMenuModule } from '@angular/material/menu'
 
-const materialModules = [
+const materialModules:any = [
   MatIconModule,
-  MatSliderModule
+  MatSliderModule,
+  MatMenuModule
 ];
 
 @NgModule({

@@ -3,5 +3,8 @@ interface FileConfig {
     name: string;
     type: string;
 }
+export interface IWindow extends Window {
+    webkitSpeechRecognition:any;
+}
 export interface SourceConfig extends FileConfig{
 }
