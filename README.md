@@ -32,11 +32,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ### SPEECH CONTROL : Control the player through speech 
 - The ability to control the video through speech.
-- The video player has been enabled to be controlled using voice. Just press the 'mic' icon and when (mic +) icon is shown, speak either of the following commands:
+- The video player has been enabled to be controlled using voice. Just press the 'microphone' icon and when (mic +) icon is shown, speak either of the following commands:
     - PLAY / START - To start the video
     - PAUSE / STOP - To pause the video
     - FULLSCREEN - Enable fullscreen
     - MUTE - Mute the video
     - VOLUME - Unmute the video
-- Press the mic button each time you want to speak a command
-<img src="src/assets/mic_off.svg">
+- Press the microphone button each time you want to speak a command
+- For now the functionality is only available in chrome based browsers.
