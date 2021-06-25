@@ -39,4 +39,4 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
     - MUTE - Mute the video
     - VOLUME - Unmute the video
 - Press the mic button each time you want to speak a command
-<img src="./src/assets/mic_off.svg">
+<img src="src/assets/mic_off.svg">
