@@ -16,21 +16,6 @@
         -ms-user-select: none; 
         user-select: none; 
     }
-    .overlay-bottom-8{
-        bottom:8%;
-    }
-    .overlay-bottom-10{
-        bottom:10%;
-    }
-    .overlay-bottom-18{
-        bottom:18%;
-    }
-    .overlay-bottom-20{
-        bottom:20%;
-    }
-    .overlay-bottom-60{
-        bottom:60%;
-    }
     .flex-grow-4 {
         flex-grow: 4;
     }
@@ -46,6 +31,10 @@
     .align-right{
         text-align: right;
     }
+    .flex-end {
+        align-content: flex-end;
+        text-align: right;
+    }
     video::-webkit-media-controls {
         display:none !important;
     }
@@ -59,53 +48,49 @@
         align-items:stretch;
         justify-content: center;
         align-items: center;
-        mat-icon{
-            font-size: 60px;
-        }
     }
-    .control-panel-container {
+    .video-container {
         position: relative;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        .control-panel {
-            z-index:10;
-            position:relative;
-            margin:0;
-            padding:0;
-            /*height: 20px;
-            line-height: 20px;*/
-            display:flex;
-            align-items:stretch;
-            .control-mat-slider{
-                bottom:8px;
-            }
-            .control-button {
-                padding: 5px;
-            }   
-            .control-button:active {
-                cursor: pointer;
-            }
-            .control-button:hover {
-                cursor: pointer;
+        .control-panel-container {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            bottom:0;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            .control-panel {
+                z-index:10;
+                position:relative;
+                margin:0;
+                padding:5px;
+                display:flex;
+                align-items:stretch;
+                .control-mat-slider{
+                    bottom:8px;
+                }
+                .control-button {
+                    padding: 5px;
+                }   
+                .control-button:active {
+                    cursor: pointer;
+                }
+                .control-button:hover {
+                    cursor: pointer;
+                }
+                .play-slider{
+                    margin: 0;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    z-index: 10;
+                    width: 100%;
+                }
             }
         }
-    }
+    }   
 
     .pointer {
         cursor: pointer;
-    }
-  
-   
-    .play-slider{
-        margin: 0;
-        margin-left: 5px;
-        margin-right: 5px;
-        z-index: 10;
-        mat-slider {
-            width: 100%;
-        }
     }
     .display-none {
         display:none;

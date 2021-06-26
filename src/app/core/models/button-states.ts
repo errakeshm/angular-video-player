@@ -11,6 +11,8 @@ export class VideoPlayerState {
     public static DEFAULT_AUDIO_LEVEL:number = 0.5;
     public static MINIMUM_AUDIO_LEVEL:number = 0;
     public static AUDIO_SKIP_LEVEL:number = 5;
+    public static AUDIO_INCREMENTAL_VALUE:number = 0.05;
+    public static VIDEO_INCREMENTAL_VALUE:number = 0.05;
 
     isLoaded(): boolean {
         return this.video == undefined;
@@ -62,5 +64,21 @@ export class VideoPlayerState {
 
     micToggle(){
         this.mic = !this.mic;
+    }
+
+    getDefaultAudioIncrementalValue() {
+        return VideoPlayerState.AUDIO_INCREMENTAL_VALUE;
+    }
+
+    getDefaultVideoIncrementalValue() {
+        return VideoPlayerState.VIDEO_INCREMENTAL_VALUE;
+    }
+
+    getMaxAudioLevel() {
+        return VideoPlayerState.MAX_AUDIO_LEVEL;
+    }
+
+    getAudioLevel(){
+        return this.audioVolumeLevel;
     }
 }

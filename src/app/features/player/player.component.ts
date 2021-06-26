@@ -5,13 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'player',
-  template: `<video-player [sourceConfig]="sourceConfig" [height]="height" [width]="width"></video-player>`
+  template: `<video-player [sourceConfig]="sourceConfig"></video-player>`
 })
 export class PlayerComponent implements OnInit {
 
   @Input() sourceConfig: Array<SourceConfig>;
-  @Input() height:number;
-  @Input() width:number;
 
   constructor(registry:MatIconRegistry, domSantitizer:DomSanitizer){
     this.initMatIcons(registry, domSantitizer);
@@ -20,7 +18,7 @@ export class PlayerComponent implements OnInit {
   initMatIcons(registry:MatIconRegistry, domSanitizer:DomSanitizer){
     registry.addSvgIcon('mic_on', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/mic_on.svg"));
     registry.addSvgIcon('mic_off', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/mic_off.svg"));
-    registry.addSvgIcon('play_arrow', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/play.svg"));
+    registry.addSvgIcon('play', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/play.svg"));
     registry.addSvgIcon('pause', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/pause.svg"));
     registry.addSvgIcon('replay', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/replay.svg"));
     registry.addSvgIcon('volume_up', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/volume.svg"));
@@ -28,6 +26,8 @@ export class PlayerComponent implements OnInit {
     registry.addSvgIcon('fullscreen', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/fullscreen.svg"));
     registry.addSvgIcon('settings', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/settings.svg"));
     registry.addSvgIcon('upload', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/upload.svg"));
+    registry.addSvgIcon('forward', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/forward.svg"));
+    registry.addSvgIcon('backward', domSanitizer.bypassSecurityTrustResourceUrl("/assets/icons/backward.svg"));
   }
 
   ngOnInit(): void {

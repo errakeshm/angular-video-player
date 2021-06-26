@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryLis
 import { MatSlider } from '@angular/material/slider';
 import { Observable, fromEvent, Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/core/constants/app.constants';
+import { ApplicationError } from 'src/app/core/constants/error';
+import { KeyboardEventCode } from 'src/app/core/constants/keyboard';
 import { VideoPlayerState } from 'src/app/core/models/button-states';
 import { IWindow, SourceConfig } from '../../interfaces/player-config';
 import { MicService } from '../../services/mic.service';
@@ -18,7 +20,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() sourceConfig: Array<SourceConfig>;
 
   controlColor:string = "white";
-  playButtonIcon:string = "play_arrow";
+  playButtonIcon:string = AppConstants.PLAY;
   replayButtonIcon:string;
   videoFileUrl:string;
   videoFileType:any;
@@ -26,16 +28,15 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   videoPlayerState : VideoPlayerState = new VideoPlayerState();
   
   @ViewChild("videoControl") videoControl:ElementRef<HTMLMediaElement>;
-  videoHtmlMediaElement: HTMLMediaElement;
-
   @ViewChild('audioSlider') audioSlider:MatSlider;
-
   @ViewChild('playSlider') playSlider:MatSlider;
+
+  videoHtmlMediaElement: HTMLMediaElement;
 
   /* Use Rxjs to capture the Keyboard event. can also be done directly as a method (keyup) from
      the element itself or can be done through HostListener
   */
-  keyPressListener:Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, 'keyup');
+  keyPressListener:Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, KeyboardEventCode.KEY_UP);
   keyPressListenerSubscriber$:Subscription;
   action:string|null;
   constructor(private micService: MicService) { }
@@ -55,17 +56,11 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
       if(this.action !== null) {
         switch(this.action){
           case AppConstants.PLAY:
-            this.onPlay(this.action);
-            break;
           case AppConstants.PAUSE:
-            this.onPlay(this.action);
-            break;
           case AppConstants.REPLAY:
             this.onPlay(this.action);
             break;
           case AppConstants.MUTE:
-            this.onVolumeClick(this.action);
-            break;
           case AppConstants.VOLUME:
             this.onVolumeClick(this.action);
             break;
@@ -73,6 +68,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
             this.onFullscreen();
             break;
         }
+      } else {
+        this.action = ApplicationError.UNRECOGNIZED;
       }
     });
   }
@@ -80,14 +77,11 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     if(this.videoControl !== undefined){
       this.videoHtmlMediaElement = (this.videoControl.nativeElement as HTMLMediaElement);
-      
       this.videoHtmlMediaElement.addEventListener('ended',(ev)=>{
         this.videoPlayerState.setReplay();
         this.determineIcon();
       });
-
       this.videoPlayerState.maxVideoDuration = Math.floor(this.videoHtmlMediaElement.duration);
-
       this.videoHtmlMediaElement.addEventListener('timeupdate',(ev)=>{
         this.playSlider.value = Math.floor(this.videoHtmlMediaElement.currentTime);
       });
@@ -95,17 +89,23 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if(this.keyPressListener !== undefined){
       this.keyPressListenerSubscriber$ = this.keyPressListener.subscribe(event => {
-        if (event.code == 'ArrowLeft') {
+        console.log(event.code)
+        if (event.code == KeyboardEventCode.ARROW_LEFT) {
           event.preventDefault();
-          this.skipVideoForDuration(-1 * VideoPlayerState.AUDIO_SKIP_LEVEL);
-          this.determineIcon();
-          this.replayButtonIcon = `replay_${VideoPlayerState.AUDIO_SKIP_LEVEL}`;
-        } else if( event.code == 'ArrowRight') {
+          this.onbackward();
+        } else if( event.code == KeyboardEventCode.ARROW_RIGHT) {
           event.preventDefault();
-          this.skipVideoForDuration(VideoPlayerState.AUDIO_SKIP_LEVEL);
-          this.determineIcon();
-          this.replayButtonIcon = `forward_${VideoPlayerState.AUDIO_SKIP_LEVEL}`;
-        }       
+          this.onforward();
+        } else if(event.code == KeyboardEventCode.SPACE_BAR) {
+          event.preventDefault();
+          this.onPlay();  
+        } else if(event.code == KeyboardEventCode.ARROW_UP) {
+          event.preventDefault();
+          this.incrementVolume(VideoPlayerState.AUDIO_INCREMENTAL_VALUE);  
+        } else if(event.code == KeyboardEventCode.ARROW_DOWN) {
+          event.preventDefault();
+          this.incrementVolume(-1 * VideoPlayerState.AUDIO_INCREMENTAL_VALUE);  
+        }     
       });
     }
   }
@@ -141,27 +141,63 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     this.changeVolume(volumeLevel);
-    this.audioSlider.value = volumeLevel;
+    // this.audioSlider.value = volumeLevel;
   }
 
   onVolumeChange(event:any){
     this.changeVolume(event.value);
-    this.videoPlayerState.setAudioLevel(event.value);
   }
 
+  onFileChange(event:any){
+    const files:FileList = event.target.files;
+    if(files.length > 0){
+      this.videoFileUrl = URL.createObjectURL(files.item(0));
+      this.videoFileType = files.item(0)?.type;
+    }
+  }
+
+  onSpeak(event:any){
+    this.videoPlayerState.micToggle();
+    if(this.videoPlayerState.isMicEnabled())
+      this.micService.start();
+    else
+      this.micService.stop();
+  }
+  
+  onFullscreen(){
+    this.videoHtmlMediaElement.requestFullscreen();
+  }
+
+  onbackward(){
+    this.skipVideoForDuration(-1 * VideoPlayerState.AUDIO_SKIP_LEVEL);
+  }
+
+  onforward(){
+    this.skipVideoForDuration(VideoPlayerState.AUDIO_SKIP_LEVEL);
+  }
+
+  incrementVolume(volume:number){
+    this.changeVolume(this.videoPlayerState.getAudioLevel() + volume);
+    this.audioSlider.value = this.videoPlayerState.getAudioLevel();
+  }
+  
   changeVolume(volume?: number) {
-    if(volume == undefined) {
-      this.audioSlider.value = VideoPlayerState.DEFAULT_AUDIO_LEVEL;
+    if(volume === undefined) {
+      volume = this.audioSlider.value = VideoPlayerState.DEFAULT_AUDIO_LEVEL;
     }
     else if(volume !== this.videoHtmlMediaElement.volume) {
-      this.videoHtmlMediaElement.volume = volume;
-      if(volume == 0){
+      if(volume <= VideoPlayerState.MINIMUM_AUDIO_LEVEL){
+        volume = VideoPlayerState.MINIMUM_AUDIO_LEVEL;
         this.videoPlayerState.setMute();
       } else {
+        if(volume > VideoPlayerState.MAX_AUDIO_LEVEL)
+          volume = VideoPlayerState.MAX_AUDIO_LEVEL;
         if(this.videoPlayerState.isMute())
           this.videoPlayerState.setUnmute();
       }
+      this.videoHtmlMediaElement.volume = volume;
     }
+    this.videoPlayerState.setAudioLevel(volume);
   }
 
   playVideo(currentTime?:number){
@@ -190,36 +226,16 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   determineIcon(){
     if(this.videoPlayerState.isPlaying()){
-      this.playButtonIcon = 'pause';
+      this.playButtonIcon = AppConstants.PAUSE;
     } else if(this.videoPlayerState.isPaused() ){
-      this.playButtonIcon = 'play_arrow';
+      this.playButtonIcon = AppConstants.PLAY;
     } else if(this.videoPlayerState.isReplaying()){
-      this.playButtonIcon = 'replay';
+      this.playButtonIcon = AppConstants.REPLAY;
     }
-  }
-
-  onFullscreen(){
-    this.videoHtmlMediaElement.requestFullscreen();
   }
 
   changeDuration(event: any){
     this.videoHtmlMediaElement.currentTime = Math.floor(event.value);
-  }
-
-  onFileChange(event:any){
-    const files:FileList = event.target.files;
-    if(files.length > 0){
-      this.videoFileUrl = URL.createObjectURL(files.item(0));
-      this.videoFileType = files.item(0)?.type;
-    }
-  }
-
-  onSpeak(event:any){
-    this.videoPlayerState.micToggle();
-    if(this.videoPlayerState.isMicEnabled())
-      this.micService.start();
-    else
-      this.micService.stop();
   }
   
   ngOnDestroy(){

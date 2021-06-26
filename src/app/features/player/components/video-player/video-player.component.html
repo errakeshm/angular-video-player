@@ -1,5 +1,5 @@
-<div class="video-container" [style.width.px]="width" [style.height.px]="height">
-    <video #videoControl class="video-player" [style.width]="'100%'" [style.height]="'auto'">
+<div class="video-container">
+    <video #videoControl class="video-player">
         <source *ngFor="let config of sourceConfig" src="{{config.path}}" type="video/{{config.type}}" />
         Video not supported for the browser
     </video>
@@ -9,21 +9,23 @@
         Video not supported for the browser
     </video>-->
    
-    <div class="control-panel-container overlay-bottom-18" [style.color]="controlColor">
+    <div class="control-panel-container" [style.color]="controlColor">
         <div class="play-slider">
             <div class="flex-grow-12">
-                <mat-slider #playSlider (input)="changeDuration($event)" min="0" max="{{videoControl.duration}}" step="0.05"></mat-slider>
+                <mat-slider [style.width]="'100%'" #playSlider (input)="changeDuration($event)" min="0" max="{{videoControl.duration}}" step="{{videoPlayerState.getDefaultVideoIncrementalValue()}}"></mat-slider>
             </div>
         </div>
         <div class="control-panel">
             <div class="flex-grow-4">
-                <mat-icon  #controlButton svgIcon="{{playButtonIcon}}" id="play" class="control-button" (click)="onPlay()"></mat-icon>
                 <mat-icon  #controlButton  svgIcon="{{videoPlayerState.isMute() ? 'volume_off' : 'volume_up'}}" id="volume" class="control-button" (click)="onVolumeClick()"></mat-icon>
-                <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="1" step="0.05"></mat-slider>
+                <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="{{videoPlayerState.getMaxAudioLevel()}}" step="{{videoPlayerState.getDefaultAudioIncrementalValue()}}"></mat-slider>
             </div>
             <div class="flex-grow-4">
+                <mat-icon  #controlButton svgIcon="backward" id="backward" class="control-button" (click)="onbackward()"></mat-icon>
+                <mat-icon  #controlButton svgIcon="{{playButtonIcon}}" id="play" class="control-button" (click)="onPlay()"></mat-icon>
+                <mat-icon  #controlButton svgIcon="forward" id="forward" class="control-button" (click)="onforward()"></mat-icon>
             </div>
-            <div class="flex-grow-2">
+            <div class="flex-grow-4 flex-end">
                 <!-- TBD -->
                 <!--<mat-icon svgIcon="upload" id="upload" class="control-button" (click)="file.click()">
                     <span class="pointer">
@@ -42,9 +44,9 @@
             </div>
         </div>
     </div>
-    <div class="video-body-icons overlay-bottom-60" [style.color]="controlColor">
+    <!--<div class="video-body-icons overlay-bottom-60" [style.color]="controlColor">
         <mat-icon #replayButton [ngClass]="'replay'">{{replayButtonIcon}}</mat-icon>
-    </div>
+    </div>-->
 </div>
 <!-- Temporary -->
 <div class="command glow">
