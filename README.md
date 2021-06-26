@@ -34,7 +34,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 	-  **Volume** : Volume Slider
 	-  **Mute / Unmute** : Mute/ Unmute the audio. If audio has not changed it will go to a default value otherwise it will go to the previously changed value.
 	-  **Video slider** : To slide through the video.
-	-  **Audion slider** : To increase or decrease the volume.
+	-  **Audio slider** : To increase or decrease the volume.
+	-  **Speech control** : The mic icon provides the capability of controlling the video player through speech
 	-  **Full screen** : Make the video go full screen
 
 - Also you can trigger the custom control button using keyboard buttons
