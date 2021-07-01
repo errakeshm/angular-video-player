@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
+import { Renderer2, Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
 import { MatSlider } from '@angular/material/slider';
 import { Observable, fromEvent, Subscription } from 'rxjs';
 import { AppConstants } from 'src/app/core/constants/app.constants';
@@ -16,7 +17,6 @@ import { MicService } from '../../services/mic.service';
 export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() width: number = 400;
-  @Input() height: number = 300;
   @Input() sourceConfig: Array<SourceConfig>;
 
   controlColor:string = "white";
@@ -30,6 +30,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("videoControl") videoControl:ElementRef<HTMLMediaElement>;
   @ViewChild('audioSlider') audioSlider:MatSlider;
   @ViewChild('playSlider') playSlider:MatSlider;
+  @ViewChildren('controlButton') controlButton:QueryList<MatIcon>;
 
   videoHtmlMediaElement: HTMLMediaElement;
 
@@ -39,7 +40,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
   keyPressListener:Observable<KeyboardEvent> = fromEvent<KeyboardEvent>(document, KeyboardEventCode.KEY_UP);
   keyPressListenerSubscriber$:Subscription;
   action:string|null;
-  constructor(private micService: MicService) { }
+  constructor(private micService: MicService, private renderer:Renderer2) { }
   
   ngOnInit(): void {
     this.micService.getStartObservable().subscribe(()=>{
@@ -108,6 +109,14 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
         }     
       });
     }
+    let sizeTobeSetForIcons = Math.floor(0.04 * this.width) + 'px';
+    let paddingToBeSet = Math.floor(0.01 * this.width) + 'px';
+    this.controlButton.map(item=>{ 
+      item._elementRef.nativeElement.style.width = sizeTobeSetForIcons;
+      item._elementRef.nativeElement.style.height = sizeTobeSetForIcons;
+      item._elementRef.nativeElement.style.fontSize = sizeTobeSetForIcons;
+      item._elementRef.nativeElement.style.padding = paddingToBeSet;
+    });
   }
 
   onPlay(action?:string){

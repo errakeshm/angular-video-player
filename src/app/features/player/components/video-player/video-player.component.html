@@ -1,5 +1,5 @@
-<div class="video-container">
-    <video #videoControl class="video-player">
+<div class="video-container" [style.width.px]="width">
+    <video #videoControl class="video-player" [style.width.px]="width">
         <source *ngFor="let config of sourceConfig" src="{{config.path}}" type="video/{{config.type}}" />
         Video not supported for the browser
     </video>
@@ -32,7 +32,7 @@
                         <input #file type="file" id="fileUpload" (change)="onFileChange($event)" hidden/>
                     </span>
                 </mat-icon>-->
-                <mat-icon svgIcon="{{videoPlayerState.isMicEnabled() ? 'mic_on' : 'mic_off'}}" id="mic" (click)="onSpeak($event)" class="control-button"></mat-icon>
+                <mat-icon #controlButton svgIcon="{{videoPlayerState.isMicEnabled() ? 'mic_on' : 'mic_off'}}" id="mic" (click)="onSpeak($event)" class="control-button"></mat-icon>
                 <!-- TBD -->
                 <!--<mat-icon svgIcon="settings" mat-icon-button [matMenuTriggerFor]="settings" id="fullscreen" class="control-button">
                 </mat-icon>
@@ -40,7 +40,7 @@
                     <span mat-menu-item class="pointer">
                     </span>
                 </mat-menu>-->
-               <mat-icon (click)="onFullscreen()" svgIcon="fullscreen" id="fullscreen" class="control-button"></mat-icon>
+               <mat-icon #controlButton (click)="onFullscreen()" svgIcon="fullscreen" id="fullscreen" class="control-button"></mat-icon>
             </div>
         </div>
     </div>
@@ -49,6 +49,6 @@
     </div>-->
 </div>
 <!-- Temporary -->
-<div class="command glow">
+<div class="command glow" [style.width.px]="width">
     <q *ngIf="action">{{action}}</q>
 </div>

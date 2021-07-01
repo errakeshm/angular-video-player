@@ -67,11 +67,12 @@
                 display:flex;
                 align-items:stretch;
                 .control-mat-slider{
-                    bottom:8px;
+                    margin-bottom:6%;
                 }
                 .control-button {
                     padding: 5px;
-                }   
+                }
+                     
                 .control-button:active {
                     cursor: pointer;
                 }
@@ -99,7 +100,6 @@
         position: absolute;
         bottom: -10%;
         text-align: center;
-        left: 45%;
         font-size: 40px;
         font-family: fantasy;
     }

@@ -5,11 +5,12 @@ import { DomSanitizer } from '@angular/platform-browser'
 
 @Component({
   selector: 'player',
-  template: `<video-player [sourceConfig]="sourceConfig"></video-player>`
+  template: `<video-player [sourceConfig]="sourceConfig" [width]="width"></video-player>`
 })
 export class PlayerComponent implements OnInit {
 
   @Input() sourceConfig: Array<SourceConfig>;
+  @Input() width: number;
 
   constructor(registry:MatIconRegistry, domSantitizer:DomSanitizer){
     this.initMatIcons(registry, domSantitizer);
