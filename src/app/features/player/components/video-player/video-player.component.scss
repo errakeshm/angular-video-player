@@ -16,6 +16,10 @@
         -ms-user-select: none; 
         user-select: none; 
     }
+    .align-center{
+        align-items: center;
+        text-align: center;
+    }
     .flex-grow-4 {
         flex-grow: 4;
     }
@@ -60,6 +64,7 @@
             flex-direction: column;
             width: 100%;
             .control-panel {
+                align-items: baseline;
                 z-index:10;
                 position:relative;
                 margin:0;
@@ -70,7 +75,7 @@
                     margin-bottom:6%;
                 }
                 .control-button {
-                    padding: 5px;
+                    padding: 5px 10px 5px 10px;
                 }
                      
                 .control-button:active {

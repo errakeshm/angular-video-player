@@ -1,5 +1,5 @@
-<div class="video-container" [style.width.px]="width">
-    <video #videoControl class="video-player" [style.width.px]="width">
+<div #videoContainer class="video-container" [style.height.%]="100" [style.width.%]="width">
+    <video #videoControl class="video-player" [style.height.%]="100" [style.width.%]="width">
         <source *ngFor="let config of sourceConfig" src="{{config.path}}" type="video/{{config.type}}" />
         Video not supported for the browser
     </video>
@@ -20,7 +20,7 @@
                 <mat-icon  #controlButton  svgIcon="{{videoPlayerState.isMute() ? 'volume_off' : 'volume_up'}}" id="volume" class="control-button" (click)="onVolumeClick()"></mat-icon>
                 <mat-slider #audioSlider (input)="onVolumeChange($event)"   id="audioSlider" class="control-button control-mat-slider" min="0" max="{{videoPlayerState.getMaxAudioLevel()}}" step="{{videoPlayerState.getDefaultAudioIncrementalValue()}}"></mat-slider>
             </div>
-            <div class="flex-grow-4">
+            <div class="flex-grow-4 align-center">
                 <mat-icon  #controlButton svgIcon="backward" id="backward" class="control-button" (click)="onbackward()"></mat-icon>
                 <mat-icon  #controlButton svgIcon="{{playButtonIcon}}" id="play" class="control-button" (click)="onPlay()"></mat-icon>
                 <mat-icon  #controlButton svgIcon="forward" id="forward" class="control-button" (click)="onforward()"></mat-icon>
@@ -49,6 +49,6 @@
     </div>-->
 </div>
 <!-- Temporary -->
-<div class="command glow" [style.width.px]="width">
+<div class="command glow" [style.height.%]="100" [style.width.%]="width">
     <q *ngIf="action">{{action}}</q>
 </div>

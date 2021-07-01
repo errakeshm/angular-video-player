@@ -1,4 +1,4 @@
-import { Renderer2, Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
+import { Renderer2, HostListener, Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy, AfterViewInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatSlider } from '@angular/material/slider';
 import { Observable, fromEvent, Subscription } from 'rxjs';
@@ -16,8 +16,11 @@ import { MicService } from '../../services/mic.service';
 })
 export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @Input() width: number = 400;
+  @Input() width: number = 100;
   @Input() sourceConfig: Array<SourceConfig>;
+
+  static MIN_ICON_WIDTH:number = 30;
+  static MAX_ICON_WIDTH:number = 40;
 
   controlColor:string = "white";
   playButtonIcon:string = AppConstants.PLAY;
@@ -109,14 +112,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
         }     
       });
     }
-    let sizeTobeSetForIcons = Math.floor(0.04 * this.width) + 'px';
-    let paddingToBeSet = Math.floor(0.01 * this.width) + 'px';
-    this.controlButton.map(item=>{ 
-      item._elementRef.nativeElement.style.width = sizeTobeSetForIcons;
-      item._elementRef.nativeElement.style.height = sizeTobeSetForIcons;
-      item._elementRef.nativeElement.style.fontSize = sizeTobeSetForIcons;
-      item._elementRef.nativeElement.style.padding = paddingToBeSet;
-    });
+    this.resizeControls();
+    
   }
 
   onPlay(action?:string){
@@ -149,6 +146,7 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
         volumeLevel = this.videoPlayerState.audioVolumeLevel;
       }
     }
+  
     this.changeVolume(volumeLevel);
     // this.audioSlider.value = volumeLevel;
   }
@@ -183,6 +181,23 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onforward(){
     this.skipVideoForDuration(VideoPlayerState.AUDIO_SKIP_LEVEL);
+  }
+
+  @HostListener('window:resize',['$event'])
+  onResize(event:any){
+    this.resizeControls();
+  }
+
+  resizeControls(){
+    let sizeTobeSetForIcons = Math.floor(0.04 * this.videoControl.nativeElement.getBoundingClientRect().width);
+    let paddingToBeSet = Math.floor(0.01 * this.videoControl.nativeElement.getBoundingClientRect().width);
+
+    let iconWidth = ((sizeTobeSetForIcons < VideoPlayerComponent.MIN_ICON_WIDTH) ? VideoPlayerComponent.MIN_ICON_WIDTH : sizeTobeSetForIcons) + 'px'
+    this.controlButton.map(item=>{ 
+      item._elementRef.nativeElement.style.width = iconWidth;
+      item._elementRef.nativeElement.style.height = iconWidth;
+      item._elementRef.nativeElement.style.fontSize = iconWidth;
+    });
   }
 
   incrementVolume(volume:number){

@@ -1,10 +1,11 @@
 .center-container {
     position:absolute;
-    top:100px;
+    vertical-align: center;
 }
 
 .player-container{
     overflow: none;
+    width: 1020px;
     .player-box {
         background: #b0aea0;
         box-shadow:  -20px 20px 60px #969488,
