@@ -10,7 +10,7 @@ Demo url : https://angular-player.netlify.app/
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-NOTE : This is not a responsive design nor intended to be one.    
+NOTE : This is not a responsive design nor intended to be one. Open only in your laptop/desktop to access its functionalities.    
 
 ## Quirky functionalities 
 
