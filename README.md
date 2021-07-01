@@ -4,6 +4,8 @@ This is a custom Angular Video Player component. This project is just to playaro
 
 ![](snapshot_custom_player.JPG)
 
+Demo url : https://angular-player.netlify.app/
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
