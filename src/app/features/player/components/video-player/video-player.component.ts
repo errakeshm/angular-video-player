@@ -93,7 +93,6 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if(this.keyPressListener !== undefined){
       this.keyPressListenerSubscriber$ = this.keyPressListener.subscribe(event => {
-        console.log(event.code)
         if (event.code == KeyboardEventCode.ARROW_LEFT) {
           event.preventDefault();
           this.onbackward();
@@ -109,7 +108,8 @@ export class VideoPlayerComponent implements OnInit, OnDestroy, AfterViewInit {
         } else if(event.code == KeyboardEventCode.ARROW_DOWN) {
           event.preventDefault();
           this.incrementVolume(-1 * VideoPlayerState.AUDIO_INCREMENTAL_VALUE);  
-        }     
+        }   
+        return false;  
       });
     }
     this.resizeControls();

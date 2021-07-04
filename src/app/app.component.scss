@@ -1,11 +1,20 @@
 .center-container {
     position:absolute;
     vertical-align: center;
+    margin: 0px;
 }
-
+.card {
+    box-shadow: 0 15px 30px 1px grey;
+	background: rgba(255, 255, 255, 0.90);
+    border-radius: 5px;
+    overflow: hidden;
+    border-top: 3px solid rgb(233, 30, 99);
+    border-bottom: 3px solid rgb(233, 30, 99);
+    padding: 5px;
+}
 .player-container{
     overflow: none;
-    width: 1020px;
+    width: 900px;
     .player-box {
         background: #b0aea0;
         box-shadow:  -20px 20px 60px #969488,

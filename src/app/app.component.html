@@ -1,7 +1,24 @@
-<div class="center-container">
-    <div class="player-container">
-        <div class="player-box">
-            <player [sourceConfig]="sourceConfig" [width]="100"></player>
+<div style="width: 100%;margin-bottom:10px;z-index: 1;">
+    <div style="display:flex">
+        <div style="flex-grow : 2"></div>
+        <div style="flex-grow : 8; text-align: center;" class="card">
+          <h2>Quirky  Video player built with Angular</h2>
+          <h3>Basic functionalities & ability to control using keyboard</h3>
+          <h3>Control using voice <img height="15px" src="../assets/icons/mic_off.svg"> -  Commands PLAY/START, STOP, FULLSCREEN, MUTE, VOLUME </h3>
+        </div>
+        <div style="flex-grow : 2"></div>
+    </div>
+</div> 
+<div style="display:flex;width: 100%;">
+    <div style="flex-grow : 2"></div>
+    <div style="flex-grow : 8; text-align: center;" >
+        <div style="top:160px" class="center-container">
+            <div class="player-container">
+                <div class="player-box">
+                    <player [sourceConfig]="sourceConfig" [width]="100"></player>
+                </div>
+            </div>
         </div>
     </div>
+    <div style="flex-grow : 2"></div>
 </div>
